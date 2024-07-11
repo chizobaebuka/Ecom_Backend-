@@ -1,0 +1,8 @@
+following modular rules for API Development
+
+1. Interface  / Types
+2. Model & mongoose schema
+3. zod validation and schema
+4. routes
+5. controllers
+6. services
