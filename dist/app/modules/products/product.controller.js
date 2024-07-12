@@ -68,10 +68,58 @@ const getSingleProduct = (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 const updateProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { productId } = req.params;
+        const data = req.body;
+        const result = yield product_service_1.productServices.updateProductByIdIntoDB(productId, data);
+        if (!result) {
+            return res.status(404).json({
+                success: false,
+                message: "Product not found"
+            });
+        }
+        res.status(200).json({
+            success: true,
+            message: "Product updated successfully",
+            data: result
+        });
+    }
+    catch (err) {
+        res.status(500).json({
+            success: false,
+            message: err.message || "Something went wrong",
+            error: err
+        });
+    }
+});
+const deleteProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { productId } = req.params;
+        const result = yield product_service_1.productServices.deleteProductByIdFromDB(productId);
+        if (!result) {
+            return res.status(404).json({
+                success: false,
+                message: "Product not found"
+            });
+        }
+        res.status(200).json({
+            success: true,
+            message: "Product deleted successfully",
+            data: null
+        });
+    }
+    catch (err) {
+        res.status(500).json({
+            success: false,
+            message: err.message || "Something went wrong",
+            error: err
+        });
+    }
 });
 exports.ProductController = {
     createProduct,
     getAllProducts,
     getSingleProduct,
     updateProduct,
+    deleteProduct
 };
